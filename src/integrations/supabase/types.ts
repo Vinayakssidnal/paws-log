@@ -14,7 +14,235 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      attachments: {
+        Row: {
+          created_at: string
+          filename: string
+          id: string
+          log_id: string
+          mime_type: string | null
+          url: string
+        }
+        Insert: {
+          created_at?: string
+          filename: string
+          id?: string
+          log_id: string
+          mime_type?: string | null
+          url: string
+        }
+        Update: {
+          created_at?: string
+          filename?: string
+          id?: string
+          log_id?: string
+          mime_type?: string | null
+          url?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "attachments_log_id_fkey"
+            columns: ["log_id"]
+            isOneToOne: false
+            referencedRelation: "logs"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      logs: {
+        Row: {
+          caregiver: string | null
+          created_at: string
+          duration_mins: number | null
+          id: string
+          notes: string | null
+          pet_id: string
+          quantity: number | null
+          quantity_unit: string | null
+          timestamp: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          caregiver?: string | null
+          created_at?: string
+          duration_mins?: number | null
+          id?: string
+          notes?: string | null
+          pet_id: string
+          quantity?: number | null
+          quantity_unit?: string | null
+          timestamp?: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          caregiver?: string | null
+          created_at?: string
+          duration_mins?: number | null
+          id?: string
+          notes?: string | null
+          pet_id?: string
+          quantity?: number | null
+          quantity_unit?: string | null
+          timestamp?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "logs_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pets: {
+        Row: {
+          breed: string | null
+          created_at: string
+          date_of_birth: string | null
+          id: string
+          name: string
+          notes: string | null
+          owner_id: string
+          photo_url: string | null
+          species: string
+          updated_at: string
+        }
+        Insert: {
+          breed?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          owner_id: string
+          photo_url?: string | null
+          species: string
+          updated_at?: string
+        }
+        Update: {
+          breed?: string | null
+          created_at?: string
+          date_of_birth?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          owner_id?: string
+          photo_url?: string | null
+          species?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pets_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          email: string
+          full_name: string | null
+          id: string
+          notification_preferences: Json | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          email: string
+          full_name?: string | null
+          id: string
+          notification_preferences?: Json | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          email?: string
+          full_name?: string | null
+          id?: string
+          notification_preferences?: Json | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      reminders: {
+        Row: {
+          created_at: string
+          description: string | null
+          enabled: boolean | null
+          id: string
+          log_id: string | null
+          next_run: string | null
+          owner_id: string
+          pet_id: string
+          repeat_cron: string | null
+          rule: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          enabled?: boolean | null
+          id?: string
+          log_id?: string | null
+          next_run?: string | null
+          owner_id: string
+          pet_id: string
+          repeat_cron?: string | null
+          rule: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          enabled?: boolean | null
+          id?: string
+          log_id?: string | null
+          next_run?: string | null
+          owner_id?: string
+          pet_id?: string
+          repeat_cron?: string | null
+          rule?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reminders_log_id_fkey"
+            columns: ["log_id"]
+            isOneToOne: false
+            referencedRelation: "logs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reminders_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reminders_pet_id_fkey"
+            columns: ["pet_id"]
+            isOneToOne: false
+            referencedRelation: "pets"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
